@@ -9,6 +9,6 @@ class SUser(BaseModel):
     class Config:
         orm_mode = True
 
-class SUserRegister(BaseModel):
+class SUserAuth(BaseModel):
     email: EmailStr
     hashed_password: str

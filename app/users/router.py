@@ -1,8 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status, Response
 
-from app.users.auth import get_password_hash
+from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dao import UserDAO
-from app.users.schemas import SUser, SUserRegister
+from app.users.schemas import SUserAuth, SUser
 
 from typing import List
 
@@ -12,7 +12,11 @@ router = APIRouter(
 )
 
 @router.post("/register")
-async def register_user(user_data: SUserRegister):
+async def register_user(user_data: SUserAuth):
+    """
+    регистрация пользователя
+
+    """
     existing_user = await UserDAO.find_one_or_none(email=user_data.email)    #проверяем есть ли такой пользователь в бд
     if existing_user:    #если есть
         raise HTTPException(status_code=400)    #выдаем ошибку
@@ -20,6 +24,18 @@ async def register_user(user_data: SUserRegister):
     await UserDAO.add(email=user_data.email, hashed_password=hashed_password)
 
 
+@router.post("/login")
+async def login_user(response: Response, user_data: SUserAuth):
+    """
+    автоизация пользователя
+
+    """
+    user = await authenticate_user(user_data.email, user_data.hashed_password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    access_token = create_access_token({"sub": user.id})
+    response.set_cookie("booking_access_token", access_token, httponly=True)
+    return {"access_token": access_token}
 
 
 
@@ -31,9 +47,6 @@ async def register_user(user_data: SUserRegister):
 
 
 
-
-
-
-@router.get("")
-async def get_users() -> list[SUser]:
-    return await UserDAO.find_all()
+# @router.get("")
+# async def get_users() -> list[SUser]:
+#     return await UserDAO.find_all()

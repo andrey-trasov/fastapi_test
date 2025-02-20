@@ -10,12 +10,13 @@ class BaseDAO:
     model = None
 
     @classmethod
-    async def find_all(cls):
+    async def find_all(cls, **filter_by):
         """
         Метод возвращает все записи из таблицы, для git запросов
         """
         async with async_session_maker() as session:    #контекстный менеджер
-            query = select(cls.model.__table__.columns)    #создание запросаа
+            # query = select(cls.model).filter_by(**filter_by)    #создание запросаа
+            query = select(cls.model.__table__.columns).filter_by(**filter_by)  # создание запросаа # работает
             result = await session.execute(query)    #запрос в бд
             return result.mappings().all()
 
@@ -41,9 +42,15 @@ class BaseDAO:
             await session.execute(query)  # запрос в бд
             await session.commit()  # сохраняем изменения в БД
 
-
-
-# видео 5 посмотрел
+    @classmethod
+    async def find_by_id(cls, model_id: int):
+        """
+        Метод возвращает запись из таблицы по id
+        """
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(id=model_id)  # создание запросаа
+            result = await session.execute(query)  # запрос в бд
+            return result.scalar_one_or_none()
 
 
 

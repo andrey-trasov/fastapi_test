@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Response, Depends
 
+from app.exceptions import UserAlreadyExistsException, IncorrectEmailOrPassword
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dao import UserDAO
 from app.users.dependencies import get_current_user
@@ -21,7 +22,7 @@ async def register_user(user_data: SUserAuth):
     """
     existing_user = await UserDAO.find_one_or_none(email=user_data.email)    #проверяем есть ли такой пользователь в бд
     if existing_user:    #если есть
-        raise HTTPException(status_code=400)    #выдаем ошибку
+        raise UserAlreadyExistsException    #выдаем ошибку
     hashed_password = get_password_hash(user_data.hashed_password)    #хешируем пароль
     await UserDAO.add(email=user_data.email, hashed_password=hashed_password)
 
@@ -34,7 +35,7 @@ async def login_user(response: Response, user_data: SUserAuth):
     """
     user = await authenticate_user(user_data.email, user_data.hashed_password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        raise IncorrectEmailOrPassword
     access_token = create_access_token({"sub": str(user.id)})
     response.set_cookie("booking_access_token", access_token, httponly=True)
     return {"access_token": access_token}

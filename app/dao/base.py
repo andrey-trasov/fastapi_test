@@ -48,12 +48,35 @@ class BaseDAO:
         Метод возвращает запись из таблицы по id
         """
         async with async_session_maker() as session:
-            query = select(cls.model).filter_by(id=model_id)  # создание запросаа
+            query = select(cls.model).filter_by(id=model_id)  # создание запроса
             result = await session.execute(query)  # запрос в бд
             return result.scalar_one_or_none()
 
+    @classmethod
+    async def update(cls, model_id: int, data):
+        """
+        Метод изменения запись в таблице
+        """
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(id=model_id)  # создание запроса
+            result = await session.execute(query)  # запрос в бд
+            model_instance = result.scalar_one_or_none()  # получение экземпляра модели
+            if model_instance:
+                for var, value in vars(data).items():
+                    setattr(model_instance, var, value) if value else None
+                await session.commit()
+            return model_instance
 
-
-
-
-
+    @classmethod
+    async def delete(cls, model_id: int):
+        """
+        Метод удаления записи из таблицы
+        """
+        async with async_session_maker() as session:
+            query = select(cls.model).filter_by(id=model_id)  # создание запроса
+            result = await session.execute(query)
+            model_instance = result.scalar_one_or_none()  # получение экземпляра модели
+            if model_instance:
+                await session.delete(model_instance)
+                await session.commit()
+            return model_instance

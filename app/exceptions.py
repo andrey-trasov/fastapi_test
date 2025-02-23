@@ -39,3 +39,6 @@ class TheHotelIsNotRented(BookingException):
     status_code=status.HTTP_409_CONFLICT
     detail="Отель не найден"
 
+class TheRoomIsNotRented(BookingException):
+    status_code=status.HTTP_409_CONFLICT
+    detail="Комната не найдена"

@@ -3,6 +3,8 @@ from fastapi import FastAPI, Query, Depends
 from typing import Optional
 
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+
 from starlette.staticfiles import StaticFiles
 
 from app.bookings.router import router as router_bookings
@@ -20,6 +22,24 @@ app.include_router(router_rooms)
 app.include_router(router_bookings)
 
 app.include_router(router_images)
+
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
+)
+
+
+
+
+
 
 
 # class SHotelsSearchArgs:

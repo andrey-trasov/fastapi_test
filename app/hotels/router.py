@@ -4,6 +4,9 @@ from app.exceptions import TheHotelIsNotRented
 from app.hotels.dao import HotelDAO
 from app.hotels.schemas import SHotel, SHotelGet
 
+from fastapi_cache.decorator import cache
+
+
 router = APIRouter(
     prefix="/hotel",
     tags=["Отели"],
@@ -18,6 +21,7 @@ async def hotel_create(hotel_data: SHotel):
 
 
 @router.get("/hotels")
+@cache(expire=20)
 async def hotel_list() -> list[SHotelGet]:
     """
     Получение списка всех отелей

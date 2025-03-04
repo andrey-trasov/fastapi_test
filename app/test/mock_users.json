@@ -1,0 +1,10 @@
+[
+  {
+    "email": "a@mail/ru",
+    "hashed_password": "\"$2b$12$0.yhi7dq4Tba5uE.Q0u9RubDKSmbnih1FYVTnLIGUs0AJAj.6rV8i\""
+  },
+  {
+    "email": "as@mail/ru",
+    "hashed_password": "\"$2b$12$0.yhi7dq4Tba5uE.Q0u9RubDKSmbnih1FYVTnLIGUs0AJAj.6rV8i\""
+  }
+]

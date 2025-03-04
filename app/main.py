@@ -7,7 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from starlette.staticfiles import StaticFiles
 
+from app.admin.views import UsersAdmin, BookingsAdmin
 from app.bookings.router import router as router_bookings
+from app.database import engine
 from app.users.router import router as router_users
 from app.hotels.router import router as router_hotels
 from app.hotels.rooms.router import router as router_rooms
@@ -21,6 +23,7 @@ from fastapi_cache.backends.redis import RedisBackend
 
 from redis import asyncio as aioredis
 
+from sqladmin import Admin, ModelView
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -53,6 +56,22 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
 )
+
+
+
+admin = Admin(app, engine)
+
+
+admin.add_view(UsersAdmin)
+admin.add_view(BookingsAdmin)
+
+
+
+
+
+
+
+
 
 
 

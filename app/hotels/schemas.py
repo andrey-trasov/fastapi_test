@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 
 
 
@@ -10,9 +10,7 @@ class SHotel(BaseModel):
     service: Dict  # JSON хранится как Dict
     rooms_qunantity: int
     image_id: int
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SHotelGet(SHotel):
     id: int

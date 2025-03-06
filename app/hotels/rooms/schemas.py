@@ -1,6 +1,6 @@
 from typing import Dict
 
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 
 
 
@@ -12,9 +12,7 @@ class SRoom(BaseModel):
     services: Dict
     quantity: int
     image_id: int
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SRoomGet(SRoom):
     id: int

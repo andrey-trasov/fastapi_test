@@ -1,13 +1,11 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import ConfigDict, BaseModel, EmailStr
 
 
 class SUser(BaseModel):
     id: int
     email: str
     hashed_password: str
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class SUserAuth(BaseModel):
     email: EmailStr

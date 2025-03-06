@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from starlette.staticfiles import StaticFiles
 
+from app.admin.auth import authentication_backend
 from app.admin.views import UsersAdmin, BookingsAdmin
 from app.bookings.router import router as router_bookings
 from app.database import engine
@@ -59,7 +60,7 @@ app.add_middleware(
 
 
 
-admin = Admin(app, engine)
+admin = Admin(app, engine, authentication_backend=authentication_backend)
 
 
 admin.add_view(UsersAdmin)

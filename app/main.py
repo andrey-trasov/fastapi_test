@@ -1,3 +1,4 @@
+import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from datetime import date
@@ -8,6 +9,7 @@ from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from pydantic import BaseModel
 from redis import asyncio as aioredis
+from fastapi import Request
 from sqladmin import Admin, ModelView
 from starlette.staticfiles import StaticFiles
 
@@ -20,6 +22,7 @@ from app.hotels.router import router as router_hotels
 from app.images.router import router as router_images
 from app.users.router import router as router_users
 from fastapi import Depends, FastAPI, Query
+from app.logger import logger
 
 
 @asynccontextmanager
@@ -64,7 +67,13 @@ admin.add_view(BookingsAdmin)
 
 
 
-
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    logger.info("Request handling time", extra={'process_time': round(process_time, 4)})
+    return response
 
 
 

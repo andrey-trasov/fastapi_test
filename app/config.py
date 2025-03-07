@@ -39,4 +39,6 @@ class Settings(BaseSettings):
     MODE: Literal["DEV", "TEST", "PROD"]
     model_config = SettingsConfigDict(env_file=".env")
 
+    LOG_LEVEL: str
+
 settings = Settings()

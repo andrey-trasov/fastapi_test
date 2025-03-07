@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Солнце",
+    "location": "Москва",
+    "service": ["Wi-Fi", "Бассейн", "Парковка"],
+    "rooms_qunantity": 10,
+    "image_id": 1
+  },
+    {
+    "name": "Наполеон",
+    "location": "Москва",
+    "service": ["Wi-Fi", "Бассейн", "Парковка"],
+    "rooms_qunantity": 5,
+    "image_id": 1
+  },
+    {
+    "name": "Радуга",
+    "location": "Москва",
+    "service": ["Wi-Fi", "Бассейн", "Парковка"],
+    "rooms_qunantity": 10,
+    "image_id": 1
+  }
+]

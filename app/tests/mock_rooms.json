@@ -1,0 +1,29 @@
+[
+  {
+    "hotel_id": 1,
+    "name": "Номер на 2",
+    "description": "Комфортнй номер",
+    "price": 1000,
+    "services":  {"dinner": "Yes"},
+    "quantity": 10,
+    "image_id": 10
+  },
+  {
+    "hotel_id": 2,
+    "name": "Номер на 3",
+    "description": "Комфортнй номер",
+    "price": 1000,
+    "services": {"dinner": "Yes"},
+    "quantity": 5,
+    "image_id": 10
+  },
+  {
+    "hotel_id": 3,
+    "name": "Номер на 2",
+    "description": "Комфортнй номер",
+    "price": 1000,
+    "services":  {"dinner": "Yes"},
+    "quantity": 10,
+    "image_id": 10
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "room_id": 1,
+    "user_id": 1,
+    "date_from": "2023-06-12",
+    "date_to": "2023-07-12",
+    "price": 10000
+  },
+    {
+    "room_id": 2,
+    "user_id": 1,
+    "date_from": "2023-06-12",
+    "date_to": "2023-07-12",
+    "price": 10000
+  },
+    {
+    "room_id": 3,
+    "user_id": 2,
+    "date_from": "2023-06-12",
+    "date_to": "2023-07-12",
+    "price": 10000
+  }
+]

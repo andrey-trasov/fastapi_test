@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from fastapi import Request, Depends
-from jose import jwt, JWTError
+from jose import JWTError, jwt
 
 from app.config import settings
-from app.exceptions import TokenAbsentException, TokenExpiredException, IncorrectTokenFormatException, \
-    UserIsNotPresentException
+from app.exceptions import (IncorrectTokenFormatException,
+                            TokenAbsentException, TokenExpiredException,
+                            UserIsNotPresentException)
 from app.users.dao import UserDAO
+from fastapi import Depends, Request
 
 
 def get_token(request: Request):
@@ -30,7 +31,7 @@ async def get_current_user(token: str = Depends(get_token)):
     except JWTError:
         raise IncorrectTokenFormatException
     expire: str = payload.get("exp")    #получаем время создания токена
-    if (not expire) or (int(expire) < datetime.utcnow().timestamp()):   #проверяем валидност времени
+    if (not expire) or (int(expire) < datetime.now().timestamp()):   #проверяем валидност времени
         raise TokenExpiredException
     user_id: str = payload.get("sub")
     if not user_id:

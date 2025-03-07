@@ -17,14 +17,11 @@
 
 
 
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.pool import NullPool
 
 from app.config import settings
-
-from sqlalchemy.orm import declarative_base
-
 
 if settings.MODE == "TEST":
     DATABASE_URL = settings.TEST_DATABASE_URL

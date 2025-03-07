@@ -1,30 +1,26 @@
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from datetime import date
-from fastapi import FastAPI, Query, Depends
 from typing import Optional
 
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from pydantic import BaseModel
+from redis import asyncio as aioredis
+from sqladmin import Admin, ModelView
 from starlette.staticfiles import StaticFiles
 
 from app.admin.auth import authentication_backend
-from app.admin.views import UsersAdmin, BookingsAdmin
+from app.admin.views import BookingsAdmin, UsersAdmin
 from app.bookings.router import router as router_bookings
 from app.database import engine
-from app.users.router import router as router_users
-from app.hotels.router import router as router_hotels
 from app.hotels.rooms.router import router as router_rooms
-
+from app.hotels.router import router as router_hotels
 from app.images.router import router as router_images
+from app.users.router import router as router_users
+from fastapi import Depends, FastAPI, Query
 
-from collections.abc import AsyncIterator
-from contextlib import asynccontextmanager
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
-
-from redis import asyncio as aioredis
-
-from sqladmin import Admin, ModelView
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:

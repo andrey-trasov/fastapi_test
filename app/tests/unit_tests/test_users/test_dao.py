@@ -1,5 +1,6 @@
-from app.users.dao import UserDAO
 import pytest
+
+from app.users.dao import UserDAO
 
 
 #проверка функции которая достает пользовтелей по id

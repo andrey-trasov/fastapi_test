@@ -1,14 +1,14 @@
 from datetime import date
 
-from fastapi import APIRouter, Depends
 from pydantic.v1 import parse_obj_as
 
 from app.bookings.dao import BookingDAO
 from app.bookings.schemas import SBooking
 from app.exceptions import RoomCannotBeBooked
+from app.tasks.tasks import send_booking_confirmation_email
 from app.users.dependencies import get_current_user
 from app.users.models import Users
-from app.tasks.tasks import send_booking_confirmation_email
+from fastapi import APIRouter, Depends
 
 router = APIRouter(
     prefix="/bookings",

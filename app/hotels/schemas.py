@@ -1,7 +1,6 @@
 from typing import Dict
 
-from pydantic import ConfigDict, BaseModel
-
+from pydantic import BaseModel, ConfigDict
 
 
 class SHotel(BaseModel):

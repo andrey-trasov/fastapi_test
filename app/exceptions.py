@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 
+
 class BookingException(HTTPException):  # <-- наследуемся от HTTPException, который наследован от Exception
     status_code = 500  # <-- задаем значения по умолчанию
     detail = ""

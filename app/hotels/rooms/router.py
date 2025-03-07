@@ -1,8 +1,7 @@
-from fastapi import APIRouter
-
 from app.exceptions import TheRoomIsNotRented
 from app.hotels.rooms.dao import RoomDAO
 from app.hotels.rooms.schemas import SRoom, SRoomGet
+from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/room",

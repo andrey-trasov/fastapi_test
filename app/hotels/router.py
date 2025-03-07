@@ -1,11 +1,9 @@
-from fastapi import APIRouter
+from fastapi_cache.decorator import cache
 
 from app.exceptions import TheHotelIsNotRented
 from app.hotels.dao import HotelDAO
 from app.hotels.schemas import SHotel, SHotelGet
-
-from fastapi_cache.decorator import cache
-
+from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/hotel",

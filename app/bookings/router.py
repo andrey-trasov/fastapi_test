@@ -30,4 +30,4 @@ async def add_booking(room_id: int, date_from: date, date_to: date, user: Users 
     bookings = await BookingDAO.add(user.id, room_id, date_from, date_to)
     if not bookings:
         raise RoomCannotBeBooked
-    send_booking_confirmation_email.delay(user.email)
+    # send_booking_confirmation_email.delay(user.email)

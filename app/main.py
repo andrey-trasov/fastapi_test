@@ -12,6 +12,8 @@ from redis import asyncio as aioredis
 from fastapi import Request
 from sqladmin import Admin, ModelView
 from starlette.staticfiles import StaticFiles
+from fastapi_versioning import VersionedFastAPI
+
 
 from app.admin.auth import authentication_backend
 from app.admin.views import BookingsAdmin, UsersAdmin
@@ -57,14 +59,20 @@ app.add_middleware(
     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
 )
 
-
+app = VersionedFastAPI(app,
+    version_format='{major}',
+    prefix_format='/v{major}',
+    # description='Greet users with a nice message',
+    # middleware=[
+    #     Middleware(SessionMiddleware, secret_key='mysecretkey')
+    # ]
+)
 
 admin = Admin(app, engine, authentication_backend=authentication_backend)
 
 
 admin.add_view(UsersAdmin)
 admin.add_view(BookingsAdmin)
-
 
 
 @app.middleware("http")

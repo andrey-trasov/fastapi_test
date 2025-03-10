@@ -9,6 +9,8 @@ from app.tasks.tasks import send_booking_confirmation_email
 from app.users.dependencies import get_current_user
 from app.users.models import Users
 from fastapi import APIRouter, Depends
+from fastapi_versioning import version
+
 
 router = APIRouter(
     prefix="/bookings",
@@ -16,6 +18,7 @@ router = APIRouter(
 )
 
 @router.get("")
+@version(1)
 async def get_bookings(user: Users = Depends(get_current_user))  -> list[SBooking]:
     """
     получение всех бронирований текущего пользователя
@@ -23,6 +26,7 @@ async def get_bookings(user: Users = Depends(get_current_user))  -> list[SBookin
     return await BookingDAO.find_all(user_id=user.id)
 
 @router.post("/create")
+@version(1)
 async def add_booking(room_id: int, date_from: date, date_to: date, user: Users = Depends(get_current_user)):
     """
     добавление нового бронирования
